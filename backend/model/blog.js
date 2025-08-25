@@ -14,12 +14,12 @@ const blogSchema = new mongoose.Schema({
 
     imageUrl:{
         type:String,
-        required:true
+        default:""
     },
 
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:User
+        ref:"User"
     },
     createdAt:{
         type:Date,
