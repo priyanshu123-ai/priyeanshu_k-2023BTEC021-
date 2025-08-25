@@ -1,4 +1,4 @@
-import DataUriParser from "datauri/paraser.js"
+import DataUriParser from "datauri/parser.js"
 
 import path from "path"
 

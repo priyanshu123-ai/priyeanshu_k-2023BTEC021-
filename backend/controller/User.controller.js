@@ -66,7 +66,7 @@ export const login = async (req, res) => {
       });
     }
 
-  const isMatched = await bcrypt.compare(password, user.password);
+    const isMatched = await bcrypt.compare(password, user.password);
 
     if (!isMatched) {
       return res.status(401).json({
@@ -82,10 +82,14 @@ export const login = async (req, res) => {
     const token = await jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {
       expiresIn: "1d",
     });
-    return res.status(201)
+    return res
+      .status(201)
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
+
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
       })
       .json({
         success: true,
@@ -93,12 +97,10 @@ export const login = async (req, res) => {
         user,
       });
   } catch (error) {
-      console.log(error);
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: error.message,
     });
-  
-
   }
 };
